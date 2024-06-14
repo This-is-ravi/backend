@@ -34,13 +34,21 @@ pipeline {
                 """
             }
         }
+
+        stage('Build'){
+            steps{ // excluding the backend.zip 
+                sh """
+                zip -q -r backend-${appVersion}.zip * -x Jenkinsfile -x backend-${appVersion}.zip 
+                ls -ltr 
+                """ // ls -ltr to know zip file created or not
+            }
               
         
     }
     post { 
         always {  // delete the workspace build after new build starts
             echo 'I will always say Hello again!'  
-            //deleteDir()
+            deleteDir()
         }
         success { 
             echo 'I will run when pipeline is success'
