@@ -40,7 +40,7 @@ pipeline {
                 sh """
                 zip -q -r backend-${appVersion}.zip * -x Jenkinsfile -x backend-${appVersion}.zip 
                 ls -ltr 
-                """ // ls -ltr to know zip file created or not
+                """ // ls -ltr to know zip file created or not, -q removes unnessary logs in o/p
             }
         }
 
