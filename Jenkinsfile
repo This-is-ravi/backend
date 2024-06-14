@@ -42,8 +42,8 @@ pipeline {
                 ls -ltr 
                 """ // ls -ltr to know zip file created or not
             }
-              
-        
+        }
+
     }
     post { 
         always {  // delete the workspace build after new build starts
@@ -57,6 +57,6 @@ pipeline {
             echo 'I will run when pipeline is failure'
         }
     }
-}
+
 
 }
