@@ -9,6 +9,7 @@ pipeline {
     }
     environment{
         def appVersion = '' //Global variable declaration
+        nexusUrl = 'nexus.csvdaws78s.online:8081'
         
     }
     
@@ -41,6 +42,28 @@ pipeline {
                 zip -q -r backend-${appVersion}.zip * -x Jenkinsfile -x backend-${appVersion}.zip 
                 ls -ltr 
                 """ // ls -ltr to know zip file created or not, -q removes unnessary logs in o/p
+            }
+        }
+
+        stage('Nexus Artifact Upload'){ //using this code artifact wil upload to nexus
+            steps{
+                script{
+                    nexusArtifactUploader(
+                        nexusVersion: 'nexus3',
+                        protocol: 'http',
+                        nexusUrl: "${nexusUrl}", // use double qouts wen usng variables
+                        groupId: 'com.expense',
+                        version: "${appVersion}",
+                        repository: "backend",
+                        credentialsId: 'nexus-auth', // wen pushing we need cred,jenkins wil go n check auth
+                        artifacts: [
+                            [artifactId: "backend" ,
+                            classifier: '',
+                            file: "backend-" + "${appVersion}" + '.zip',   // backend-1.1.0.zip
+                            type: 'zip']       // java means- jar file
+                        ]
+                    )
+                }
             }
         }
 
