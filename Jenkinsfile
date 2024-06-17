@@ -67,6 +67,19 @@ pipeline {
             }
         }
 
+        stage('Deploy'){
+            
+            steps{
+                script{   // we r passing the params i.e CI to trigger the CD-job
+                    def params = [
+                        string(name: 'appVersion', value: "${appVersion}")  //1.0.0
+                    ]
+                    build job: 'backend-deploy', parameters: params, wait: false //if True, it waits till downstream CD-job completes
+                }
+            }
+        }
+    }
+
     }
     post { 
         always {  // delete the workspace build after new build starts
