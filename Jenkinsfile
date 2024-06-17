@@ -80,7 +80,7 @@ pipeline {
         }
     }
 
-    }
+    
     post { 
         always {  // delete the workspace build after new build starts
             echo 'I will always say Hello again!'  
