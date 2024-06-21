@@ -72,7 +72,7 @@ pipeline {
             steps{
                 script{   // we r passing the params i.e CI to trigger the CD-job
                     def params = [
-                        string(name: 'appVersion', value: "${appVersion}")  //1.0.0
+                        string(name: 'appVersion', value: "${appVersion}")  //1.2.0
                     ]
                     build job: 'backend-deploy', parameters: params, wait: false //if True, it waits till downstream CD-job completes
                 }
